@@ -20,4 +20,29 @@ $(function() {
 	$('.header__burger, .header__nav').toggleClass('active')
 	$('body').toggleClass('lock')
 })
+
+	// Parallax
+
+	const catalog = document.querySelector('.catalog')
+
+	catalog.addEventListener('mousemove', parallax)
+
+	function parallax(e) {
+		this.querySelectorAll('.parallaxFigure').forEach(figure => {
+			const speed = figure.getAttribute('data-speed'),
+				  x = (window.innerWidth - e.pageX*speed) / 150,
+				  y = (window.innerHeight - e.pageY*speed) / 150
+
+			figure.style.transform = `translate(${x}px, ${y}px)`
+		})
+	}
+
+	//Slider
+
+	$('#slider').slick({
+		arrows: false,
+		dots: true,
+		fade: true,
+		autoplay: true,
+	})
 })

@@ -131,29 +131,33 @@ input:focus:-ms-input-placeholder {
 input::-webkit-input-placeholder {
   font-family: "Roboto";
   font-weight: bold;
-  color: #aaa;
+  color: #444;
   font-size: 18px;
+  text-transform: uppercase;
 }
 
 input::-moz-placeholder {
   font-family: "Roboto";
   font-weight: bold;
-  color: #aaa;
+  color: #444;
   font-size: 18px;
+  text-transform: uppercase;
 }
 
 input::-moz-placeholder {
   font-family: "Roboto";
   font-weight: bold;
-  color: #aaa;
+  color: #444;
   font-size: 18px;
+  text-transform: uppercase;
 }
 
 input::-ms-input-placeholder {
   font-family: "Roboto";
   font-weight: bold;
-  color: #aaa;
+  color: #444;
   font-size: 18px;
+  text-transform: uppercase;
 }
 
 .header {
@@ -161,7 +165,7 @@ input::-ms-input-placeholder {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 10000;
 }
 
 .header:before {
@@ -360,6 +364,16 @@ input::-ms-input-placeholder {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.preview:nth-child(2n) {
+  background: url("../img/bg-2.jpg") center no-repeat;
+  background-size: cover;
+}
+
+.preview:nth-child(3n) {
+  background: url("../img/bg-3.png") center no-repeat;
+  background-size: cover;
+}
+
 .preview__text {
   text-align: right;
 }
@@ -377,6 +391,8 @@ input::-ms-input-placeholder {
 
 .preview__title {
   margin-bottom: 10px;
+  margin-right: 10px;
+  font-size: 60px;
 }
 
 .preview__subtitle {
@@ -412,36 +428,18 @@ input::-ms-input-placeholder {
 
 .preview__form input {
   font-weight: bold;
-  color: #aaa;
+  color: #444;
   font-size: 18px;
   position: relative;
   margin-bottom: 20px;
+  -webkit-transition: all .7s ease;
+  -o-transition: all .7s ease;
+  transition: all .7s ease;
 }
 
-.preview__form:before,
-.preview__form:after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  right: 100px;
-  border-radius: 50%;
-  z-index: 5;
-}
-
-.preview__form:after {
-  top: -3px;
-  right: 107px;
-  width: 15px;
-  height: 15px;
-  background-color: #f00;
-}
-
-.preview__form:before {
-  width: 30px;
-  height: 30px;
-  background-color: #fff;
-  -webkit-box-shadow: 0 0 10px 1px;
-          box-shadow: 0 0 10px 1px;
+.preview__form input:focus {
+  -webkit-box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5);
+          box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5);
 }
 
 .preview__form button {
@@ -462,9 +460,33 @@ input::-ms-input-placeholder {
   border-color: #811111;
 }
 
-.preview__dots {
-  position: absolute;
-  bottom: -100%;
+#slider {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.slick-list {
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.slick-track {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.slick-slide {
+  width: 100%;
+}
+
+.slick-dots {
+  position: relative;
+  top: -100px;
   left: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -474,32 +496,38 @@ input::-ms-input-placeholder {
           justify-content: space-between;
   max-width: 50px;
   width: 100%;
+  z-index: 1000;
   -webkit-transform: translate(-50%);
       -ms-transform: translate(-50%);
           transform: translate(-50%);
 }
 
-.preview__dots span {
+.slick-dots li {
   display: inline-block;
   width: 10px;
   height: 10px;
+  list-style: none;
   border-radius: 50%;
-  background-color: #454545;
+  background-color: #212121;
   cursor: pointer;
 }
 
-.preview__dots span:hover {
-  background-color: #aaa;
+.slick-dots li button {
+  font-size: 0;
 }
 
-.preview__dots span.active {
+.slick-dots li:hover {
+  background-color: #454545;
+}
+
+.slick-dots li.slick-active {
   background-color: #fff;
 }
 
 .main {
   position: relative;
   top: -40px;
-  z-index: 10;
+  z-index: 1000;
   background: transparent;
 }
 
@@ -545,6 +573,7 @@ input::-ms-input-placeholder {
   width: 100%;
   height: 40px;
   border: 1px solid #aaa;
+  font-size: 18px;
 }
 
 .main__pricing {
@@ -695,10 +724,13 @@ input::-ms-input-placeholder {
   text-align: center;
   border-top-left-radius: 34px;
   border-bottom-right-radius: 34px;
-  -webkit-box-shadow: 0 0 20px 1px #aaa;
-          box-shadow: 0 0 20px 1px #aaa;
+  -webkit-box-shadow: 0 0 20px 1px #bbb;
+          box-shadow: 0 0 20px 1px #bbb;
   background-color: #fff;
   z-index: 1;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
 }
 
 .catalog__card--new:before,
@@ -734,13 +766,32 @@ input::-ms-input-placeholder {
           transform: rotate(45deg);
 }
 
+.catalog__card:hover {
+  -webkit-box-shadow: 0 0 20px 1px #888;
+          box-shadow: 0 0 20px 1px #888;
+  -webkit-transform: translateY(-10px);
+      -ms-transform: translateY(-10px);
+          transform: translateY(-10px);
+}
+
 .catalog__pht {
   min-height: 200px;
+  overflow: hidden;
+  border-top-left-radius: 34px;
 }
 
 .catalog__pht img {
   width: 100%;
   border-top-left-radius: 34px;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+}
+
+.catalog__pht img:hover {
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 .catalog__text {
@@ -788,7 +839,7 @@ input::-ms-input-placeholder {
 .square {
   position: absolute;
   top: 40%;
-  left: -15%;
+  left: -10%;
 }
 
 .triangle {
@@ -858,11 +909,6 @@ input::-ms-input-placeholder {
 
   .preview__subtitle {
     font-size: 35px;
-  }
-
-  .preview form:before,
-  .preview form:after {
-    display: none;
   }
 }
 
@@ -1112,14 +1158,14 @@ input::-ms-input-placeholder {
     display: none;
   }
 
-  .preview__dots {
+  .slick-dots {
     left: 100%;
     bottom: -100%;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    max-height: 50px;
+    min-height: 50px;
     height: 100%;
   }
 }
@@ -1186,8 +1232,8 @@ input::-ms-input-placeholder {
     font-size: 35px;
   }
 
-  .preview__dots {
-    bottom: -60%;
+  .slick-dots {
+    top: -60px;
   }
 }
 
@@ -1238,11 +1284,15 @@ input::-ms-input-placeholder {
     font-size: 25px;
   }
 
-  .preview__dots {
+  .slick-dots {
     display: none;
   }
 }
 
 .webp .preview { background: url(../img/bg.webp) center no-repeat; }
+
+.webp .preview:nth-child(2n) { background: url(../img/bg-2.webp) center no-repeat; }
+
+.webp .preview:nth-child(3n) { background: url(../img/bg-3.webp) center no-repeat; }
 
 .webp .catalog { background: url(../img/catalog-bg.webp) center no-repeat; }
