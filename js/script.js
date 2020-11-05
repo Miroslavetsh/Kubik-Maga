@@ -2774,4 +2774,31 @@ $(function() {
 		})
 	}
 
+	// Catalog checkboxes
+
+	if ($('.more')) {
+		$('.more').click(function (event) {
+			$(this).toggleClass('_active').next().toggleClass('_active');
+		})
+	}
+
+	// Catalog categories
+
+	if ($('.categories__button--more')) {
+		$('.categories__button--more').click(function (event) {
+			event.preventDefault()
+
+			$(this).toggleClass('_active').next().toggleClass('categories__list--hidden');
+		})
+	}
+
+	if (document.querySelector('.categories__link')) {
+		const a = $('.categories__link')
+
+		a.on('click', function (e) {
+			e.preventDefault()
+
+			$(this).parent().toggleClass('_active')
+		})
+	}
 })

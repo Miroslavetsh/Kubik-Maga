@@ -989,6 +989,17 @@ input::-ms-input-placeholder {
 
 .aside__filter--blck {
   margin-bottom: 20px;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .aside__heading {
@@ -996,10 +1007,14 @@ input::-ms-input-placeholder {
   font-weight: 500;
 }
 
+.aside__price {
+  margin-bottom: 30px;
+}
+
 .categories {
   position: relative;
   z-index: 1;
-  padding: 20px 40px 0;
+  padding: 20px 40px 40px;
   overflow: hidden;
   border-top-left-radius: 26px;
   border-bottom-right-radius: 26px;
@@ -1020,10 +1035,15 @@ input::-ms-input-placeholder {
       -ms-flex-direction: column;
           flex-direction: column;
   list-style-type: none;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
 }
 
 .categories__list--hidden {
-  display: none;
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
 }
 
 .categories__list li {
@@ -1052,7 +1072,9 @@ input::-ms-input-placeholder {
 
 .categories__button--more {
   margin: 0 -40px;
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   display: block;
   height: 40px;
   border-bottom-right-radius: 26px;
@@ -1068,9 +1090,9 @@ input::-ms-input-placeholder {
   z-index: 0;
   border-radius: 50%;
   background: #000;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%) rotate(180deg);
+      -ms-transform: translate(-50%, -50%) rotate(180deg);
+          transform: translate(-50%, -50%) rotate(180deg);
 }
 
 .categories__button--more span:before,
@@ -1102,9 +1124,190 @@ input::-ms-input-placeholder {
 }
 
 .categories__button--more._active span {
-  -webkit-transform: translate(-50%, -50%) rotate(180deg);
-      -ms-transform: translate(-50%, -50%) rotate(180deg);
-          transform: translate(-50%, -50%) rotate(180deg);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.more {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+  padding-right: 30px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.more:before,
+.more:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 1.3px;
+  width: 10px;
+  background: #000;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+}
+
+.more:before {
+  right: -3px;
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+      -ms-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.more:after {
+  right: 3px;
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+      -ms-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.more._active:before {
+  right: -3px;
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+      -ms-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.more._active:after {
+  right: 3px;
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+      -ms-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.form__check {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 15px;
+}
+
+.form__check--outer {
+  margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 0;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: translateY(-100px);
+      -ms-transform: translateY(-100px);
+          transform: translateY(-100px);
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+}
+
+.form__check--outer._active {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.form__check--box {
+  display: none;
+}
+
+.form__check--area {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  margin-right: 15px;
+  cursor: pointer;
+  border: 1px solid #a5a5a5;
+}
+
+.form__check--area::before,
+.form__check--area::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 1.3px;
+  opacity: 0;
+  background: #000;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+}
+
+.form__check--area::before {
+  width: 8px;
+  top: 51%;
+  left: 31%;
+  -webkit-transform: translate(-50%, -50%) rotate(60deg);
+      -ms-transform: translate(-50%, -50%) rotate(60deg);
+          transform: translate(-50%, -50%) rotate(60deg);
+}
+
+.form__check--area::after {
+  width: 16px;
+  top: 35%;
+  left: 75%;
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+      -ms-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.form__check--rad {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  margin-right: 15px;
+  cursor: pointer;
+  background: #fff;
+  -webkit-box-shadow: 0 0 10px 3px #a5a5a5;
+          box-shadow: 0 0 10px 3px #a5a5a5;
+  border-radius: 50%;
+}
+
+.form__check--rad::before {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  border-radius: 50%;
+  background: #f00;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.form__check--txt {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form__check--box:checked + .form__check--area::before,
+.form__check--box:checked + .form__check--area::after,
+.form__check--box:checked + .form__check--rad::before {
+  opacity: 1;
 }
 
 .mark {
