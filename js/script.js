@@ -1,3 +1,5 @@
+// Modules
+
 // Active
 
 function isActivated(element) {
@@ -17,22 +19,51 @@ function disactivate(element) {
 }
 
 
-// Fixed
+// Fixed state
 
-function isfixed(element) {
-    if (element.classList.contains('_fixed')) {
-        return true;
-    } else {
-        return false;
+function makeAbsolute(element) {
+    element.style.position = "absolute"
+}
+
+function makeFixed(element) {
+    element.style.position = "fixed";
+}
+
+
+// Lock element
+
+function lock(element) {
+    element.classList.add('_lock');
+};
+
+
+function unlock(element) {
+    element.classList.remove('_lock');
+};;
+function getHeightOf(element) {
+    return element.offsetHeight;
+}
+
+function getOffsetOf(el) {
+    const rect = el.getBoundingClientRect(),
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
+}
+
+function getDocumentScrolledTop() {
+    return self.pageYOffset || (document.documentElement && document.documentElement.scrollTop) || (document.body && document.body.scrollTop);
+};
+// WEBP format 
+
+function testWebP(callback) {
+
+    var webP = new Image()
+    webP.onload = webP.onerror = function () {
+        callback(webP.height == 2)
     }
-}
-
-function fixate(element) {
-    element.classList.add('_fixed');
-}
-
-function unfix(element) {
-    element.classList.remove('_fixed');
+    webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
 };
 (function(factory) {
     if (typeof define === "function" && define.amd) {
@@ -2712,17 +2743,65 @@ function unfix(element) {
 ;
 
 
-// WEBP format 
+// Price range
 
-function testWebP(callback) {
+try {
+	const priceSlider = document.querySelector('.price__range');
 
-	var webP = new Image()
-	webP.onload = webP.onerror = function () {
-		callback(webP.height == 2)
+	noUiSlider.create(priceSlider, {
+		start: [100, 700],
+		connect: [false, true, false],
+		range: {
+			'min': [0],
+			'max': [1000]
+		}
+	});
+
+	const inputNumberMin = $('.price__input--min'),
+		inputNumberMax = $('.price__input--max');
+
+	priceSlider.noUiSlider.on('update', function (values, handle) {
+
+		let value = values[handle];
+
+		if (handle) {
+			inputNumberMax.value = value;
+		} else {
+			inputNumberMin.value = value;
+		}
+	});
+
+	inputNumberMin.addEventListener('change', function (event) {
+		event.preventDefault();
+
+		priceSlider.noUiSlider.set([this.value, null]);
+	});
+
+	inputNumberMax.addEventListener('change', function (event) {
+		event.preventDefault();
+
+		priceSlider.noUiSlider.set([null, this.value]);
+	});
+
+} catch (err) { }
+
+
+// Fixed header
+
+const preview = document.querySelector('.preview'),
+	header = document.querySelector('.header');
+
+let previewHeight = getHeightOf(preview);
+
+document.addEventListener('scroll', () => {
+	if (getDocumentScrolledTop() >= previewHeight) {
+		makeFixed(header);
+		header.style.animation = "toggleDown 1s";
+	} else {
+		makeAbsolute(header);
+		header.style.animation = "";
 	}
-	webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
-}
-
+})
 
 // Burger
 
@@ -2730,58 +2809,14 @@ const burger = document.querySelector('.header__burger'),
 	navigation = document.querySelector('.nav'),
 	body = document.querySelector('body');
 
-
 burger.addEventListener('click', () => {
-	if (isActivated(burger) && isfixed(body)) {
+	if (isActivated(burger) || isActivated(navigation)) {
 		disactivate(burger);
 		disactivate(navigation);
-		unfix(body);
-
+		unlock(body);
 	} else {
 		activate(burger);
 		activate(navigation);
-		fixate(body)
+		lock(body)
 	}
 })
-
-
-// Price range
-
-
-const priceSlider = document.querySelector('.price__range') || undefined;
-
-noUiSlider.create(priceSlider, {
-	start: [100, 700],
-	connect: [false, true, false],
-	range: {
-		'min': [0],
-		'max': [1000]
-	}
-});
-
-
-const inputNumberMin = document.querySelector('.price__input--min'),
-	inputNumberMax = document.querySelector('.price__input--max');
-
-priceSlider.noUiSlider.on('update', function (values, handle) {
-
-	let value = values[handle];
-
-	if (handle) {
-		inputNumberMax.value = value;
-	} else {
-		inputNumberMin.value = value;
-	}
-});
-
-inputNumberMin.addEventListener('change', function (event) {
-	event.preventDefault();
-
-	priceSlider.noUiSlider.set([this.value, null]);
-});
-
-inputNumberMax.addEventListener('change', function (event) {
-	event.preventDefault();
-
-	priceSlider.noUiSlider.set([null, this.value]);
-});
