@@ -2757,8 +2757,8 @@ try {
 		}
 	});
 
-	const inputNumberMin = $('.price__input--min'),
-		inputNumberMax = $('.price__input--max');
+	const inputNumberMin = document.querySelector('.price__input--min'),
+		inputNumberMax = document.querySelector('.price__input--max');
 
 	priceSlider.noUiSlider.on('update', function (values, handle) {
 
@@ -2783,7 +2783,9 @@ try {
 		priceSlider.noUiSlider.set([null, this.value]);
 	});
 
-} catch (err) { }
+} catch (err) {
+	console.log(err)
+}
 
 
 // Fixed header
