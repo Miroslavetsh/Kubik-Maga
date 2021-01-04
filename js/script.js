@@ -2822,3 +2822,53 @@ burger.addEventListener('click', () => {
 		lock(body)
 	}
 })
+
+// Aside show list
+
+const asideShow = document.querySelector('.asideShow'),
+	listToShow = document.querySelector('.aside__list--hidden'),
+	listHeight = getHeightOf(listToShow);
+
+asideShow.addEventListener('click', () => {
+	if (isActivated(asideShow)) {
+		disactivate(asideShow);
+		listToShow.classList.remove('aside__list--hidden')
+		listToShow.style.top = '360px'
+	} else {
+		activate(asideShow);
+		listToShow.classList.add('aside__list--hidden')
+		listToShow.style.top = listHeight
+	}
+})
+
+// Toggle spoilers
+
+let triggers = document.querySelectorAll('.aside__title'),
+	elements = document.querySelectorAll('.aside__block')
+
+for (let i = 0; i < triggers.length; i++) {
+	let trigger = triggers[i],
+		element = elements[i]
+	trigger.addEventListener('click', () => {
+		if (isActivated(trigger) || isActivated(element)) {
+			disactivate(trigger)
+			disactivate(element)
+		}
+		else {
+			activate(trigger)
+			activate(element)
+		}
+	})
+}
+
+let asideItems = document.querySelectorAll('.aside__item')
+
+asideItems.forEach(item => {
+	item.addEventListener('click', () => {
+		if (isActivated(item)) {
+			disactivate(item)
+		} else {
+			activate(item)
+		}
+	})
+})
