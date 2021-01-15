@@ -2872,3 +2872,22 @@ asideItems.forEach(item => {
 		}
 	})
 })
+
+// Tabs
+
+document.querySelectorAll('.slider__trigger').forEach((item) => 
+	item.addEventListener('click', function (event) {
+		event.preventDefault();
+		const id = event.target.getAttribute('href').replace('#', '')
+
+		document.querySelectorAll('.slider__trigger').forEach(
+			(child) => child.classList.remove('slider__trigger--active')
+		)
+		document.querySelectorAll('.slider__item').forEach(
+			(child) => child.classList.remove('slider__item--active')
+		)
+		item.classList.add('slider__trigger--active')
+		document.getElementById(id).classList.add('slider__item--active')
+	})
+)
+document.querySelector('.slider__trigger').click()
