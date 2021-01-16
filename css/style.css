@@ -1312,6 +1312,7 @@ a:focus {
 .maincatalog {
   background: url("../img/catalog/bg.jpg") center no-repeat;
   background-size: cover;
+  padding-bottom: 30px;
 }
 
 .maincatalog__inner {
@@ -1924,6 +1925,43 @@ a:focus {
 
 .search__show svg:last-child {
   margin-right: 0;
+}
+
+.pagination {
+  margin: 0 auto;
+}
+
+.pagination__button {
+  padding: 1.2rem 2.4rem;
+  margin-right: 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid #a5a5a5;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.pagination__button:hover {
+  border-color: #777;
+  background: #777;
+  color: #212121;
+}
+
+.pagination__button:last-child {
+  margin-right: 0;
+}
+
+.pagination__button._active {
+  color: #fff;
+  border-color: #f00;
+  background: #f00;
+}
+
+.pagination__button._active:hover {
+  border-color: #811111;
+  background: #811111;
 }
 
 @media (max-width: 1175px) {
