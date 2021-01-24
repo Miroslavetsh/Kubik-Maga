@@ -2742,7 +2742,6 @@ function testWebP(callback) {
 });
 ;
 
-
 // Price range
 
 try {
@@ -2790,20 +2789,23 @@ try {
 
 // Fixed header
 
-const preview = document.querySelector('.preview'),
-	header = document.querySelector('.header');
+if (document.querySelector('.preview')) {
+	const preview = document.querySelector('.preview'),
+		header = document.querySelector('.header');
 
-let previewHeight = getHeightOf(preview);
+	let previewHeight = getHeightOf(preview);
 
-document.addEventListener('scroll', () => {
-	if (getDocumentScrolledTop() >= previewHeight) {
-		makeFixed(header);
-		header.style.animation = "toggleDown 1s";
-	} else {
-		makeAbsolute(header);
-		header.style.animation = "";
-	}
-})
+	document.addEventListener('scroll', () => {
+		if (getDocumentScrolledTop() >= previewHeight) {
+			makeFixed(header);
+			header.style.animation = "toggleDown 1s";
+		} else {
+			makeAbsolute(header);
+			header.style.animation = "";
+		}
+	})
+}
+
 
 // Burger
 
@@ -2825,57 +2827,61 @@ burger.addEventListener('click', () => {
 
 // Aside show list
 
-const asideShow = document.querySelector('.asideShow'),
-	listToShow = document.querySelector('.aside__list--hidden'),
-	listHeight = getHeightOf(listToShow);
-
-asideShow.addEventListener('click', () => {
-	if (isActivated(asideShow)) {
-		disactivate(asideShow);
-		listToShow.classList.remove('aside__list--hidden')
-		listToShow.style.top = '360px'
-	} else {
-		activate(asideShow);
-		listToShow.classList.add('aside__list--hidden')
-		listToShow.style.top = listHeight
-	}
-})
-
-// Toggle spoilers
-
-let triggers = document.querySelectorAll('.aside__title'),
-	elements = document.querySelectorAll('.aside__block')
-
-for (let i = 0; i < triggers.length; i++) {
-	let trigger = triggers[i],
-		element = elements[i]
-	trigger.addEventListener('click', () => {
-		if (isActivated(trigger) || isActivated(element)) {
-			disactivate(trigger)
-			disactivate(element)
-		}
-		else {
-			activate(trigger)
-			activate(element)
+if (document.querySelector('.asideShow')) {
+	const asideShow = document.querySelector('.asideShow'),
+		listToShow = document.querySelector('.aside__list--hidden'),
+		listHeight = getHeightOf(listToShow);
+	
+	asideShow.addEventListener('click', () => {
+		if (isActivated(asideShow)) {
+			disactivate(asideShow);
+			listToShow.classList.remove('aside__list--hidden')
+			listToShow.style.top = '360px'
+		} else {
+			activate(asideShow);
+			listToShow.classList.add('aside__list--hidden')
+			listToShow.style.top = listHeight
 		}
 	})
 }
 
-let asideItems = document.querySelectorAll('.aside__item')
+// Toggle spoilers
 
-asideItems.forEach(item => {
-	item.addEventListener('click', () => {
-		if (isActivated(item)) {
-			disactivate(item)
-		} else {
-			activate(item)
-		}
+if (document.querySelectorAll('.aside__title')) {
+	let triggers = document.querySelectorAll('.aside__title'),
+		elements = document.querySelectorAll('.aside__block')
+	
+	for (let i = 0; i < triggers.length; i++) {
+		let trigger = triggers[i],
+			element = elements[i]
+		trigger.addEventListener('click', () => {
+			if (isActivated(trigger) || isActivated(element)) {
+				disactivate(trigger)
+				disactivate(element)
+			}
+			else {
+				activate(trigger)
+				activate(element)
+			}
+		})
+	}
+	
+	let asideItems = document.querySelectorAll('.aside__item')
+	
+	asideItems.forEach(item => {
+		item.addEventListener('click', () => {
+			if (isActivated(item)) {
+				disactivate(item)
+			} else {
+				activate(item)
+			}
+		})
 	})
-})
+}
 
 // Tabs
 
-if (document.querySelectorAll('.slider__trigger')) {
+if (document.querySelector('.slider__trigger')) {
 	document.querySelectorAll('.slider__trigger').forEach((item) => 
 		item.addEventListener('click', function (event) {
 			event.preventDefault();
@@ -2896,3 +2902,104 @@ if (document.querySelectorAll('.slider__trigger')) {
 
 // Popups
 
+if (document.querySelectorAll('.popup__link')) {
+	const popupLinks = document.querySelectorAll('.popup__link')
+	const lockPadding = document.querySelectorAll('.lock__padding')
+
+	let unlocked = true
+	
+	const timeout = 800
+	
+	if (popupLinks.length > 0) {
+		for (let i = 0; i < popupLinks.length; i++) {
+			const popupLink = popupLinks[i]
+			popupLink.addEventListener('click', function(event) {
+				event.preventDefault()
+	
+				const popupName = popupLink.getAttribute('href').replace('#', '')
+				const currentPopup = document.querySelector(`#${popupName}`)
+				popupOpen(currentPopup)
+			})
+		}
+	}
+	
+	const popupCloseIcons = document.querySelectorAll('.close-popup')
+	if (popupCloseIcons.length > 0) {
+		for (let i = 0; i < popupCloseIcons.length; i++) {
+			const popupCloseIcon = popupCloseIcons[i]
+			popupCloseIcon.addEventListener('click', function(event) {
+				event.preventDefault()
+	
+				popupClose(popupCloseIcon.closest('.popup'))
+			})
+		}
+	}
+	
+	function popupOpen(currentPopup) {
+		if (currentPopup && unlocked) {
+			const popupActive = document.querySelector('.popup._active')
+			if (popupActive) {
+				popupClose(popupActive, false)
+			}else {
+				bodyLock()
+			}
+			currentPopup.classList.add('_active')
+			currentPopup.addEventListener('click', function(e) {
+				if(!e.target.closest('.popup__body')) {
+					popupClose(e.target.closest('.popup'))
+				}
+			})
+		}
+		
+	}
+	
+	function popupClose(popupActive, doUnlock = true) {
+		if (unlocked) {
+			popupActive.classList.remove('_active')
+			if (doUnlock) {
+				bodyUnlock()
+			}
+		}
+	}
+	
+	function bodyLock() {
+		if (lockPadding.length > 0) {
+			for (let i = 0; i < lockPadding.length; i++) {
+				const el = lockPadding[i]
+				el.style.paddingRight = 16 + 'px'
+			}
+		}
+		body.style.paddingRight = 16 + 'px'
+		body.classList.add('_lock')
+	
+		unlocked = false
+		setTimeout(function() {
+			unlocked = true
+		}, timeout)
+	}
+	
+	function bodyUnlock() {
+		setTimeout(function() {
+			if (lockPadding.length > 0) {
+				for (let i = 0; i < lockPadding.length; i++) {
+					const el = lockPadding[i]
+					el.style.paddingRight = '0px'
+				}
+			}
+			body.style.paddingRight = '0px'
+			body.classList.remove('_lock')
+		}, timeout)
+	
+		unlocked = false 
+		setTimeout(function() {
+			unlocked = true
+		}, timeout)
+	}
+	
+	document.addEventListener('keydown', function (e) {
+		if (e.which === 27) {
+			const popupActive = document.querySelector('.popup._active')
+			popupClose(popupActive)
+		}
+	})
+}
