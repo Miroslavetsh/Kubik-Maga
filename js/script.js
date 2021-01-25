@@ -2745,7 +2745,7 @@ function testWebP(callback) {
 // Price range
 
 try {
-	const priceSlider = document.querySelector('.price__range');
+	const priceSlider = document.querySelector('.price__range') || document.querySelector('.price__range--pop');
 
 	noUiSlider.create(priceSlider, {
 		start: [100, 700],
@@ -2829,18 +2829,38 @@ burger.addEventListener('click', () => {
 
 if (document.querySelector('.asideShow')) {
 	const asideShow = document.querySelector('.asideShow'),
-		listToShow = document.querySelector('.aside__list--hidden'),
-		listHeight = getHeightOf(listToShow);
+		listToInsert = document.querySelector('.aside__list')
 	
 	asideShow.addEventListener('click', () => {
 		if (isActivated(asideShow)) {
 			disactivate(asideShow);
-			listToShow.classList.remove('aside__list--hidden')
-			listToShow.style.top = '360px'
+			listToInsert.insertAdjacentHTML('beforeend', `
+				<li class="aside__item aside__item--ins">Компактные в дорогу</li>
+				<li class="aside__item aside__item--ins">Кооперативные</li>
+				<li class="aside__item aside__item--ins">С кубиком и фишками</li>
+				<li class="aside__item aside__item--ins">С простыми правилами</li>
+				<li class="aside__item aside__item--ins">Для влюбленных</li>
+				<li class="aside__item aside__item--ins">Головоломки</li>
+				<li class="aside__item aside__item--ins">Вопросы, задания, ассоциации</li>
+				<li class="aside__item aside__item--ins">Ролевые</li>
+				<li class="aside__item aside__item--ins">Активные игры</li>
+				<li class="aside__item aside__item--ins">Для компании</li>
+				<li class="aside__item aside__item--ins">Быстрые</li>
+				<li class="aside__item aside__item--ins">Для двоих игроков</li>
+				<li class="aside__item aside__item--ins">Для взрослых</li>
+				<li class="aside__item aside__item--ins">С миниатюрами</li>
+				<li class="aside__item aside__item--ins">Карточные и коллекционные</li>
+				<li class="aside__item aside__item--ins">С дополнениями</li>
+				<li class="aside__item aside__item--ins">Алкогольные</li>
+			`)
 		} else {
 			activate(asideShow);
-			listToShow.classList.add('aside__list--hidden')
-			listToShow.style.top = listHeight
+
+			const listToDelete = listToInsert.querySelectorAll('.aside__item--ins')
+
+			listToDelete.forEach(elem => {
+				elem.remove()
+			})
 		}
 	})
 }
@@ -2882,19 +2902,21 @@ if (document.querySelectorAll('.aside__title')) {
 // Tabs
 
 if (document.querySelector('.slider__trigger')) {
+	const wrapper = document.querySelector('#tab_')
+	const img = wrapper.appendChild(document.createElement('img'))
+
 	document.querySelectorAll('.slider__trigger').forEach((item) => 
 		item.addEventListener('click', function (event) {
 			event.preventDefault();
-			const id = event.target.getAttribute('href').replace('#', '')
+			let imageSource = event.target.getAttribute('data-img')
 	
 			document.querySelectorAll('.slider__trigger').forEach(
 				(child) => child.classList.remove('slider__trigger--active')
 			)
-			document.querySelectorAll('.slider__item').forEach(
-				(child) => child.classList.remove('slider__item--active')
-			)
+
+			img.src = imageSource
+
 			item.classList.add('slider__trigger--active')
-			document.getElementById(id).classList.add('slider__item--active')
 		})
 	)
 	document.querySelector('.slider__trigger').click()
@@ -3002,4 +3024,30 @@ if (document.querySelectorAll('.popup__link')) {
 			popupClose(popupActive)
 		}
 	})
+}
+
+// Image on pruduct page
+
+if (document.querySelector('.gallery__img')) {
+
+	const triggersArray = document.querySelectorAll('.gallery__triggers--trigger')
+
+	triggersArray.forEach((item) => 
+		item.addEventListener('click', function (event) {
+			event.preventDefault();
+
+			document.querySelectorAll('.gallery__triggers--trigger').forEach(child => child.classList.remove('_active'))
+
+			let imgWrap = document.querySelector('.gallery__img')
+			let source = imgWrap.querySelector('source')
+			let img = document.querySelector('.gallery__img--img')
+
+			source.srcset = item.src
+			img.src = item.src
+			
+			item.classList.add('_active')
+		})
+	)
+	document.querySelector('.gallery__triggers--trigger').click()
+
 }
