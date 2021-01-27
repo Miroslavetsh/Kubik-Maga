@@ -3051,3 +3051,41 @@ if (document.querySelector('.gallery__img')) {
 	document.querySelector('.gallery__triggers--trigger').click()
 
 }
+
+// Counter in cart
+
+if (document.querySelector('#amountInput')) {
+	const cartAmountInput = document.querySelector('#amountInput')
+	const plusBtn = document.querySelector('#addAmount')
+	const minusBtn = document.querySelector('#removeAmount')
+	
+	plusBtn.addEventListener('click', e => {
+		e.preventDefault()
+		let val = Number(cartAmountInput.value)
+		
+		val += 1
+
+		cartAmountInput.value = val
+	})
+	
+	minusBtn.addEventListener('click', e => {
+		e.preventDefault()
+		
+		let val = Number(cartAmountInput.value)
+		
+		val -= 1
+
+		cartAmountInput.value = val
+	})
+}
+
+// Language
+
+const langPlace = document.querySelector('#langPlace')
+const langList = document.querySelector('#langList')
+
+langList.querySelectorAll('li').forEach(li => {
+	li.addEventListener('click', function() {
+		langPlace.innerHTML = this.innerHTML
+	})
+})
